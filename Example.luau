@@ -174,7 +174,7 @@ local function preset(background, surface, surface2, surface3, strokeColor, stro
 end
 
 Library.ThemePresets = {
-    Airflow = preset({ 20, 16, 20 }, { 24, 19, 24 }, { 28, 22, 28 }, { 42, 36, 43 }, { 40, 32, 41 }, { 88, 70, 90 }, { 235, 199, 246 }, { 24, 18, 26 }, { 233, 229, 234 }, { 125, 115, 126 }),
+    VRS = preset({ 20, 16, 20 }, { 24, 19, 24 }, { 28, 22, 28 }, { 42, 36, 43 }, { 40, 32, 41 }, { 88, 70, 90 }, { 235, 199, 246 }, { 24, 18, 26 }, { 233, 229, 234 }, { 125, 115, 126 }),
     Midnight = preset({ 15, 18, 26 }, { 18, 22, 31 }, { 22, 26, 37 }, { 37, 44, 60 }, { 34, 40, 55 }, { 70, 84, 112 }, { 128, 160, 246 }, { 14, 18, 30 }, { 228, 232, 242 }, { 116, 126, 148 }),
     Ocean = preset({ 12, 20, 24 }, { 15, 24, 29 }, { 18, 29, 35 }, { 31, 48, 56 }, { 29, 44, 52 }, { 58, 92, 104 }, { 110, 214, 222 }, { 10, 24, 28 }, { 226, 238, 240 }, { 108, 134, 140 }),
     Rose = preset({ 22, 15, 18 }, { 27, 18, 22 }, { 32, 21, 26 }, { 48, 34, 40 }, { 45, 30, 37 }, { 98, 64, 78 }, { 246, 160, 186 }, { 30, 14, 20 }, { 240, 228, 232 }, { 138, 112, 120 }),
@@ -199,7 +199,7 @@ Library.ThemePresets = {
     Abyss = preset({ 7, 11, 22 }, { 9, 14, 28 }, { 12, 18, 35 }, { 22, 31, 58 }, { 20, 28, 52 }, { 44, 64, 120 }, { 72, 148, 255 }, { 6, 14, 34 }, { 226, 234, 250 }, { 100, 116, 152 }),
 }
 
-Library.ThemeName = "Airflow"
+Library.ThemeName = "VRS Artelier"
 
 Library.Assets = {
     Shadow = "rbxassetid://6014261993",
@@ -222,7 +222,7 @@ local function loadLucide()
         lucideSet = result
     else
         lucideSet = false
-        warn("[AirFlow] lucide icons unavailable: " .. tostring(result))
+        warn("[VRS Artelier] lucide icons unavailable: " .. tostring(result))
     end
     return lucideSet
 end
@@ -245,16 +245,16 @@ local FONT_WEIGHTS = {
 function Library:LoadFont(opts)
     opts = normalize(opts, {})
     if type(writefile) ~= "function" or type(isfile) ~= "function" or typeof(getcustomasset) ~= "function" then
-        warn("[AirFlow] custom fonts need writefile, isfile and getcustomasset")
+        warn("[VRS Artelier] custom fonts need writefile, isfile and getcustomasset")
         return false
     end
     local name = opts.Name or "CustomFont"
     local weights = opts.Weights or FONT_PRESETS[name]
     if type(weights) ~= "table" then
-        warn("[AirFlow] no font weights for " .. name)
+        warn("[VRS Artelier] no font weights for " .. name)
         return false
     end
-    local folder = opts.Folder or "AirFlowFonts"
+    local folder = opts.Folder or "VRS_Fonts"
     pcall(function()
         if type(isfolder) == "function" and type(makefolder) == "function" and not isfolder(folder) then
             makefolder(folder)
@@ -274,7 +274,7 @@ function Library:LoadFont(opts)
             if ok then
                 table.insert(faces, { name = weightName, weight = info[1], style = "normal", assetId = getcustomasset(path) })
             else
-                warn("[AirFlow] could not download " .. weightName .. " weight of " .. name)
+                warn("[VRS Artelier] could not download " .. weightName .. " weight of " .. name)
             end
         end
     end
@@ -352,7 +352,7 @@ local function resolveIcon(icon)
     elseif type(entry) == "string" then
         return entry
     end
-    warn("[AirFlow] unknown lucide icon: " .. name)
+    warn("[VRS Artelier] unknown lucide icon: " .. name)
     return nil
 end
 
@@ -368,7 +368,7 @@ Library.Fonts = {
 local Theme = Library.Theme
 local Assets = Library.Assets
 
--- The OuroFlow mark, embedded as a 256px grayscale PNG so it needs no upload.
+-- The VRS Artelier mark, embedded as a 256px grayscale PNG so it needs no upload.
 -- It is written to the workspace once and loaded with getcustomasset; the
 -- white-to-grey shading is multiplied by the theme accent like the old logo.
 -- Without file functions the uploaded asset above stays in use.
@@ -400,11 +400,11 @@ pcall(function()
     if type(writefile) ~= "function" or typeof(getcustomasset) ~= "function" then
         return
     end
-    local folder = "AirFlowAssets"
+    local folder = "VRS_Assets"
     if type(isfolder) == "function" and type(makefolder) == "function" and not isfolder(folder) then
         makefolder(folder)
     end
-    local path = folder .. "/OuroFlowLogo.png"
+    local path = folder .. "/VRSLogo.png"
     local png = decodeBase64(EMBEDDED_LOGO)
     local fresh = type(isfile) == "function" and type(readfile) == "function" and isfile(path) and readfile(path) == png
     if not fresh then
@@ -995,7 +995,7 @@ local function safeCall(callback, ...)
     end
     local ok, err = pcall(callback, ...)
     if not ok then
-        warn("[AirFlow] callback error: " .. tostring(err))
+        warn("[VRS Artelier] callback error: " .. tostring(err))
     end
 end
 
@@ -1282,7 +1282,7 @@ function Tab:Label(opts)
                 if ok and value ~= nil then
                     text_.Text = tostring(value)
                 elseif not ok then
-                    warn("[AirFlow] label update error: " .. tostring(value))
+                    warn("[VRS Artelier] label update error: " .. tostring(value))
                 end
                 task.wait(rate)
             end
@@ -4147,11 +4147,11 @@ function Library.Window(_, opts)
         Minimized = false,
         _hideName = false,
         _hideAvatar = false,
-        Title = opts.Title or "Airflow",
+        Title = opts.Title or "VRS Artelier",
         _logoIcon = opts.Icon or Assets.Logo,
     }, Window)
     local saving = type(opts.ConfigurationSaving) == "table" and opts.ConfigurationSaving or {}
-    self.ConfigFolder = saving.FolderName or "AirflowUI"
+    self.ConfigFolder = saving.FolderName or "VRS_Artelier"
     self.ConfigName = saving.FileName or "default"
     self._configListeners = {}
     self._pendingFlags = {}
@@ -4185,7 +4185,7 @@ function Library.Window(_, opts)
     table.insert(self._connections, UserInputService.InputEnded:Connect(dispatch("Ended")))
 
     local gui = create("ScreenGui", {
-        Name = opts.Name or "AirflowUI",
+        Name = opts.Name or "VRS_Artelier",
         IgnoreGuiInset = true,
         ResetOnSpawn = false,
         DisplayOrder = 999,
@@ -5290,7 +5290,7 @@ function Window:_showLoader(opts)
     local titleLabel = label({
         Position = UDim2.fromOffset(TEXT_X + 10, 32),
         Size = UDim2.new(1, -TEXT_X - 24, 0, 24),
-        Text = opts.LoadingTitle or opts.Title or "Airflow",
+        Text = opts.LoadingTitle or opts.Title or "VRS Artelier",
         TextSize = 22,
         TextTransparency = 1,
         Parent = loader,
@@ -5908,7 +5908,7 @@ function Window:_createOpenButton(opts)
         Position = UDim2.fromOffset(28, 0),
         Size = UDim2.new(0, 0, 1, 0),
         AutomaticSize = Enum.AutomaticSize.X,
-        Text = opts.Title or "Airflow",
+        Text = opts.Title or "VRS Artelier",
         TextSize = 13,
         TextTruncate = Enum.TextTruncate.None,
         ZIndex = 31,
@@ -6233,7 +6233,7 @@ end
 -- Colours are {"Hex":"ff5a5a"}, keybinds are key names, an empty dropdown has no Value.
 
 local CONFIG_VERSION = 1
-local LEGACY_SHARE_PREFIX = "airflow:"
+local LEGACY_SHARE_PREFIX = "vrs:"
 
 local function configPath(self, name)
     return self.ConfigFolder .. "/" .. name .. ".json"
@@ -6421,7 +6421,7 @@ for index = 1, #B64 do
     B64_INDEX[B64:byte(index)] = index - 1
 end
 
--- Only for reading the old "airflow:<base64>" share codes.
+-- Only for reading the old "vrs:<base64>" share codes.
 local function base64Decode(text)
     if #text % 4 ~= 0 then
         return nil
@@ -6450,7 +6450,7 @@ local function base64Decode(text)
 end
 
 -- Reads a config file or a pasted code: the JSON above (Config as a string or
--- a table), a bare flag table, or an old "airflow:" code. Returns flags, info.
+-- a table), a bare flag table, or an old "vrs:" code. Returns flags, info.
 local function decodeConfig(text)
     text = tostring(text or ""):match("^%s*(.-)%s*$")
     if text:sub(1, #LEGACY_SHARE_PREFIX) == LEGACY_SHARE_PREFIX then
@@ -8305,7 +8305,7 @@ function Tab:ConfigManager(opts)
 end
 
 local PRESET_ORDER = {
-    "Airflow", "Obsidian", "Nebula", "Synthwave", "Sakura", "Velvet", "Rose", "Crimson", "Sunset", "Amber", "Gold",
+    "VRS Artelier", "Obsidian", "Nebula", "Synthwave", "Sakura", "Velvet", "Rose", "Crimson", "Sunset", "Amber", "Gold",
     "Cyber", "Toxic", "Matcha", "Emerald", "Aurora", "Ocean", "Frost", "Midnight", "Abyss", "Mono",
 }
 
@@ -9045,7 +9045,7 @@ function Tab:Status(opts)
                     end
                     render(true)
                 else
-                    warn("[AirFlow] status update error: " .. tostring(value))
+                    warn("[VRS Artelier] status update error: " .. tostring(value))
                 end
                 task.wait(rate)
             end
@@ -9388,7 +9388,7 @@ function Tab:StatusList(opts)
                             handle:Set(result)
                         end
                     else
-                        warn("[AirFlow] status list update error: " .. tostring(result))
+                        warn("[VRS Artelier] status list update error: " .. tostring(result))
                     end
                 end
                 task.wait(rate)
@@ -9563,7 +9563,7 @@ function Tab:Image(opts)
             return false, "replaced by a newer image"
         end
         if not asset then
-            warn("[AirFlow] image: " .. tostring(err))
+            warn("[VRS Artelier] image: " .. tostring(err))
             return false, err
         end
         image.ImageTransparency = 1
@@ -12969,7 +12969,7 @@ function Window:CloudConfigs(opts)
     local pageSize = math.max(math.floor(tonumber(opts.PageSize) or 20), 1)
     local tagList = type(opts.Tags) == "table" and opts.Tags or {}
     local maxTags = math.max(math.floor(tonumber(opts.MaxTags) or 3), 0)
-    local anonName = tostring(opts.StreamerName or "Ouroboros User")
+    local anonName = tostring(opts.StreamerName or "VRS User")
 
     local cloud = { Tab = tab }
     local records, byId = {}, {}
@@ -14130,7 +14130,7 @@ function Window:CloudConfigs(opts)
                     page -= 1
                 end
                 if not ok then
-                    warn("[AirFlow] cloud OnFetch error: " .. tostring(list))
+                    warn("[VRS Artelier] cloud OnFetch error: " .. tostring(list))
                 end
                 hasMore = more and hasMore or false
                 moreButton.Visible = false
@@ -15004,7 +15004,7 @@ function Window:CloudConfigs(opts)
             submitText.Text = editing and "Save changes" or "Publish"
             if not ok or result == false then
                 if not ok then
-                    warn("[AirFlow] cloud publish error: " .. tostring(result))
+                    warn("[VRS Artelier] cloud publish error: " .. tostring(result))
                 end
                 showError(ok and reason and tostring(reason) or "Something went wrong, try again")
                 return
@@ -17298,7 +17298,7 @@ function Window:Destroy()
         end
     end)
     if not ok then
-        warn("[AirFlow] unload animation failed, removing the window directly: " .. tostring(err))
+        warn("[VRS Artelier] unload animation failed, removing the window directly: " .. tostring(err))
         remove()
         return
     end
@@ -17424,7 +17424,7 @@ end)()
 
 
 
-local Airflow = Library
+local VRSLib = Library
 
 -- ====================================================================
 -- [ VRS ARTELIER - BRANDING & LOGO CONFIGURATION ]
@@ -17434,18 +17434,18 @@ local Airflow = Library
 local VRS_LOGO = "crown"
 
 pcall(function()
-    if Airflow.Assets then
-        Airflow.Assets.Logo = VRS_LOGO
+    if VRSLib.Assets then
+        VRSLib.Assets.Logo = VRS_LOGO
     end
 end)
 
 -- Always use Sakura theme and Sakura Screen backdrop by default
 pcall(function()
-    Airflow:SetDefaultTheme("Sakura")
+    VRSLib:SetDefaultTheme("Sakura")
 end)
 
 -- 1:1 Window Setup for VRS Artelier
-local Window = Airflow:CreateWindow({
+local Window = VRSLib:CreateWindow({
     Name = "VRS Artelier",
     Icon = VRS_LOGO,
     Theme = "Sakura",
@@ -17529,7 +17529,7 @@ local Window = Airflow:CreateWindow({
                         Name = "Collect Nearby Chests",
                         Icon = "package",
                         Callback = function()
-                            Airflow:Notify({
+                            VRSLib:Notify({
                                 Title = "VRS Artelier",
                                 Content = "Vacuuming chests...",
                                 Icon = "check",
@@ -17570,7 +17570,7 @@ ClanRoll:CreateToggle({
     CurrentValue = false,
     Flag = "AutoSpin",
     Callback = function(v)
-        Airflow:Notify({
+        VRSLib:Notify({
             Title = "VRS Clan Spinner",
             Content = v and "Spinning started!" or "Spinning stopped.",
             Icon = "refresh-cw",
@@ -17583,7 +17583,7 @@ ClanRoll:CreateButton({
     Name = "Redeem All Active Codes",
     Icon = "gift",
     Callback = function()
-        Airflow:Notify({
+        VRSLib:Notify({
             Title = "VRS Codes",
             Content = "Redeemed all active codes!",
             Icon = "check",
@@ -17608,7 +17608,7 @@ Interface:CreateButton({
     Name = "Unload Hub",
     Icon = "power",
     Callback = function()
-        Airflow:Confirm({
+        VRSLib:Confirm({
             Title = "Unload VRS Artelier?",
             Content = "Are you sure you want to unload the hub?",
             ConfirmText = "Unload",
