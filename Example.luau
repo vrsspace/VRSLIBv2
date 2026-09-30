@@ -17439,15 +17439,17 @@ pcall(function()
     end
 end)
 
--- Set initial theme to Obsidian (exact match with the dark obsidian look)
+-- Always use Sakura theme and Sakura Screen backdrop by default
 pcall(function()
-    Airflow:SetDefaultTheme("Obsidian")
+    Airflow:SetDefaultTheme("Sakura")
 end)
 
 -- 1:1 Window Setup for VRS Artelier
 local Window = Airflow:CreateWindow({
     Name = "VRS Artelier",
     Icon = VRS_LOGO,
+    Theme = "Sakura",
+    DefaultTheme = "Sakura",
     LoadingTitle = "VRS Artelier",
     LoadingSubtitle = "Artisan Suite • Project Slayers 2",
     ToggleUIKeybind = "RightControl",
@@ -17461,7 +17463,8 @@ local Window = Airflow:CreateWindow({
         Icon = "crown"
     },
     Backdrop = {
-        Weather = "Snow",
+        Weather = "Sakura",
+        Mode = "Screen",
         Tint = 0.45
     },
     Home = {
@@ -17541,6 +17544,13 @@ local Window = Airflow:CreateWindow({
     }
 })
 
+-- Lock in Sakura theme and Screen Sakura weather effect
+pcall(function()
+    if Window.SetTheme then Window:SetTheme("Sakura", true) end
+    if Window.SetWeather then Window:SetWeather("Sakura") end
+    if Window.SetWeatherMode then Window:SetWeatherMode("Screen") end
+end)
+
 -- TAB 2: CLAN
 local ClanTab = Window:CreateTab({ Name = "Clan", Icon = "shield" })
 local ClanRoll = ClanTab:AddLeftGroupbox({ Name = "Clan Management", Icon = "crown" })
@@ -17610,5 +17620,4 @@ Interface:CreateButton({
 })
 
 SettingsTab:CreateConfigManager({ Name = "Configs", Side = "Left" })
-SettingsTab:CreateThemeManager({ Name = "Themes", Side = "Right" })
 
